@@ -1,5 +1,6 @@
 import joblib
 import numpy as np
+import pandas as pd
 from data_split import load_data, split_train_test
 from feature_engineering import FeatureEngineer, clean_dataset
 from model_runner import (
@@ -11,7 +12,7 @@ from model_runner import (
 )
 from model_evaluation import evaluate_model
 from preprocessor import preprocess_data
-
+pd.set_option('display.max_rows', None) 
 
 DATA_PATH = "train.csv"
 TARGET_COLUMN = "SalePrice"
@@ -25,11 +26,15 @@ def main():
         df, target_col=TARGET_COLUMN
     )
 
+    default_row = X_train_raw
+    joblib.dump(default_row, "default_template.pkl")
     feature_engineer = FeatureEngineer()
     feature_engineer.fit(X_train_raw)
 
     X_train = feature_engineer.transform(X_train_raw)
     X_test = feature_engineer.transform(X_test_raw)
+
+    # print(X_train.dtypes)
 
     y_train = np.log1p(y_train_raw)
     y_test = np.log1p(y_test_raw)

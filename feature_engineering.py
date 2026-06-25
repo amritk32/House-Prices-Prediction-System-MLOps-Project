@@ -108,14 +108,14 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
             X[col] = X[col].fillna(median_value)
 
         X["GarageAge"] = X["GarageAge"].fillna(X["GarageAge"].median())
-
-
-        X["LotArea"] = np.log1p(X["LotArea"])
-        X["MiscVal"] = np.log1p(X["MiscVal"])
-        X["Bath"] = np.log1p(X["Bath"])
-        X["MSSubClass"] = np.log1p(X["MSSubClass"])
-        X["MasVnrArea"] = np.sqrt(np.log1p(X["MasVnrArea"]))
         X["GarageAge"] = np.log1p(X["GarageAge"].clip(lower=0))
+
+        X["LotArea"] = np.log1p(X["LotArea"].clip(lower=0))
+        X["MiscVal"] = np.log1p(X["MiscVal"].clip(lower=0))
+        X["Bath"] = np.log1p(X["Bath"].clip(lower=0))
+        X["MSSubClass"] = np.log1p(X["MSSubClass"].clip(lower=0))
+        X["MasVnrArea"] = np.sqrt(np.log1p(X["MasVnrArea"].clip(lower=0)))
+        
 
         X.drop(columns=["GarageYrBlt"], inplace=True, errors="ignore")
         return X
