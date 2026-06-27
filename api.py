@@ -3,7 +3,7 @@ import pandas as pd
 from pdantic import HouseInput
 import joblib
 import numpy as np
-
+from feature_engineering import FeatureEngineer
 app = FastAPI()
 
 model = joblib.load("house_price_model.pkl")

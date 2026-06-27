@@ -25,8 +25,7 @@ def main():
     X_train_raw, X_test_raw, y_train_raw, y_test_raw = split_train_test(
         df, target_col=TARGET_COLUMN
     )
-
-    default_row = X_train_raw
+    default_row = X_train_raw.iloc[[0]].copy()
     joblib.dump(default_row, "default_template.pkl")
     feature_engineer = FeatureEngineer()
     feature_engineer.fit(X_train_raw)
@@ -60,12 +59,14 @@ def main():
     evaluate_model(xgb_model, X_test_processed, y_test, "XGBoost")
     evaluate_model(ridge_model, X_test_processed, y_test, "Ridge")
     evaluate_model(lgbm_model, X_test_processed, y_test, "LightGBM")
-    evaluate_model(voting_ensemble, X_test_processed, y_test, "Voting Ensemble")
+    final_metrics = evaluate_model(voting_ensemble, X_test_processed, y_test, "Voting Ensemble")
 
     joblib.dump(voting_ensemble, "house_price_model.pkl")
     joblib.dump(preprocessor, "preprocessor.pkl")
     joblib.dump(feature_engineer, "feature_engineer.pkl")
     joblib.dump(X_train.columns.tolist(), "model_features.pkl")
+
+    joblib.dump(final_metrics, "metrics.pkl")
 
     print("✅ House Price Model Saved Successfully!")
 
