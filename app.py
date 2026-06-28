@@ -97,7 +97,7 @@ try:
     st.sidebar.metric("RMSLE (Error Rate)", f"{metrics['rmsle']:.4f}")
     
     st.sidebar.divider()
-    FASTAPI_URL = st.sidebar.text_input("🔗 Backend API URL", value="https://house-price-api-nhl3.onrender.com/predict")
+    FASTAPI_URL = "https://house-price-api-nhl3.onrender.com/predict"
 
 except FileNotFoundError:
     st.sidebar.error("⚠️ metrics.pkl not found! Please run `python main.py` first.")
